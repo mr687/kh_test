@@ -11,6 +11,7 @@ class Search extends MX_Controller{
   {
     $page = $this->input->get('page') ?? 1;
     $search_query = $this->input->get('query') ?? '';
+    $search_query = $this->security->xss_clean($search_query);
 
     $config['base_url'] = base_url('talent/search');
     $config['per_page'] = 5;
