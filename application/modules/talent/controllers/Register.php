@@ -16,9 +16,31 @@ class Register extends MX_Controller
       $data = $this->security->xss_clean($data);
 
       $isValid = $this->input_validation();
+      var_dump($_FILES);
+      var_dump($isValid);
       if ($isValid) {
-        $this->m_talent->store($data);
-        return redirect('/talent/register_success');
+        $this->load->library('upload');
+
+        $config['upload_path'] = './uploads/';
+        $config['allowed_types'] = 'jpg|png';
+        $config['encrypt_name'] = TRUE;
+        $config['max_size'] = '2048';
+
+        $this->upload->initialize($config);
+        $upload_data = null;
+        if($this->upload->do_upload('photo'))
+        {
+          $upload_data = $this->upload->data();
+        }else{
+          $this->form_validation->set_message('photo', $this->upload->display_errors('', ''));
+          return $this->template->call_landing_template([
+            'title' => 'Talent Registration',
+            'body' => $this->load->view('registration_v', [], true)
+          ]);
+        }
+        $talent_id = $this->m_talent->store($data);
+        $this->m_talent->savePhoto($talent_id, $upload_data['file_name']);
+        return redirect('/talent/register/register_success');
       }
     }
 
@@ -47,6 +69,9 @@ class Register extends MX_Controller
     $this->form_validation->set_rules('aboutme', 'Ceritakan Dirimu', 'trim|required|max_length[255]');
     $this->form_validation->set_rules('kategori[]', 'Pilih Kategorimu', 'required');
     $this->form_validation->set_rules('skills[]', 'Skill', 'required');
+    if (empty($_FILES['photo']['name'])) {
+      $this->form_validation->set_rules('photo', 'Foto', 'required');
+    }
     return $this->form_validation->run();
   }
 }

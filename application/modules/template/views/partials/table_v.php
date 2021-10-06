@@ -37,7 +37,7 @@
       <tr>
         <td><?php echo $item->name ?></td>
         <td class="text-center">
-          <img src="https://picsum.photos/id/<?php echo $item->id ?>/100/100" class="img-thumbnail">
+          <img src="<?php echo $item->url ?>" width="100" alt="no pic" class="img-thumbnail">
         </td>
         <td><?php echo arr_map_badge($item->categories) ?></td>
         <td><?php echo str_map_badge($item->skills) ?></td>

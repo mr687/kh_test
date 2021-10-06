@@ -2,7 +2,7 @@
 
 <!-- Start registration form -->
 <div id="talent-registration" class="card card-body">
-  <?php echo form_open('/talent/register') ?>
+  <?php echo form_open_multipart('/talent/register') ?>
   <div class="row">
     <div class="col-12 col-md-6 mb-3">
       <div class="form-group">
@@ -110,6 +110,16 @@
           'required' => ''
         ], set_value('aboutme')) ?>
         <?php echo form_error('aboutme', '<div class="text-danger small">', '</div>') ?>
+      </div>
+      <div class="form-group mb-3">
+        <?php echo form_label('Upload Foto', 'photo', ['class' => 'mb-2']) ?>
+        <?php echo form_upload([
+          'id' => 'photo',
+          'name' => 'photo',
+          'class' => 'form-control',
+          'required' => ''
+        ]) ?>
+        <?php echo form_error('photo', '<div class="text-danger small">', '</div>') ?>
       </div>
       <?php echo form_button([
         'type' => 'submit',

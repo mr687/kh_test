@@ -3,7 +3,7 @@
 <div class="row mt-4">
   <div class="col-12 col-md-3">
     <div class="card card-body text-center">
-      <img src="https://picsum.photos/id/<?php echo $talent->id ?>/100/100" class="img-thumbnail rounded-pill mb-3">
+      <img src="<?php echo $talent->url ?>" alt="no pic" class="img-thumbnail rounded-pill mb-3">
       <h5><?php echo $talent->name ?></h5>
       <div>
         <?php echo str_map_badge($talent->skills) ?>
